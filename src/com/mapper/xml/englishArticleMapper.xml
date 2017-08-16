@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.EnglishArticleMapper">
+	<resultMap type="com.pojo.EnglishArticle" id="englishArticle">
+		<id property="id" column="id"/>
+		<result property="title" column="TITLE"/>
+		<result property="article" column="ARTICLE"/>
+		<result property="author" column="AUTHOR"/>
+		<result property="addTime" column="ADD_TIME"/>
+		<result property="translate" column="TRANSLATE"/>
+	</resultMap>
+	
+	<insert id="addArticle" parameterType="com.pojo.EnglishArticle">
+		insert into ZM_ENGLISH_ARTICLE (ID,TITLE,ARTICLE,AUTHOR,ADD_TIME,translate)
+		values (#{id},#{title},#{article},#{author},#{addTime},#{translate})
+	</insert>
+	
+	<select id="queryAllArticle" resultType="java.util.Map">
+		select s.title,cast(s.article as char) as article,cast(s.translate as char) as translate,s.author,s.add_time,s.id
+		 from ZM_ENGLISH_ARTICLE s  where 1=1 
+			<if test="title!=null and title!=''">
+				and title like  '%'||#{title}||'%'
+			</if>
+			<if test="author!=null and author!=''">
+				and author like '%'||#{author}||'%'
+			</if>
+   		 limit #{startPage},#{count}
+	</select>
+	
+	<select id="countArticle" resultType="int">
+		select count(1) from ZM_ENGLISH_ARTICLE where 1=1 
+		<if test="title!=null and title!=''">
+				and title like  '%'||#{title}||'%'
+			</if>
+			<if test="author!=null and author!=''">
+				and author like '%'||#{author}||'%'
+			</if>
+	</select>
+	
+	<delete id="deleteArticleById" parameterType="String">
+		delete from ZM_ENGLISH_ARTICLE where id=#{id}
+	</delete>
+	
+	<select id="queryArticleById" parameterType="String" resultMap="englishArticle">
+		select t1.title,cast(t1.article as char) as article,cast(t1.translate as char) as translate,t1.author,t1.add_time as addTime from ZM_ENGLISH_ARTICLE t1 where t1.id=#{id}
+	</select>
+	
+	<update id="updateArticle" parameterType="com.pojo.EnglishArticle">
+		update ZM_ENGLISH_ARTICLE set TITLE=#{title},ARTICLE=#{article},AUTHOR=#{author},TRANSLATE=#{translate} where id=#{id}
+	</update>
+</mapper>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.PermissionMapper">
+	<resultMap type="com.shiro.Permission" id="permission">
+		<id property="id" column="id"/>
+		<result property="permissionname" column="permissionname"/>
+		<result property="role_id" column="role_id"/>
+	</resultMap>
+	
+	<select id="findAll" resultType="com.shiro.Permission">
+		select t1.permissionname from permission t1 LEFT JOIN role t2 ON t1.role_id=t2.id LEFT JOIN user_role t3 
+		ON t3.role_id=t2.id LEFT JOIN user t4 ON t4.id=t3.user_id where t4.username=#{username}
+	</select>
+</mapper>

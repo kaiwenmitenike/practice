@@ -1,0 +1,6 @@
+/applicationContext-shiro.xml
+/applicationContext.xml
+/com/
+/jdbc.properties
+/logback.xml
+/springmvc.xml

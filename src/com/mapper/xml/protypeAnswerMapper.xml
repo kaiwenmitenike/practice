@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.ProtypeAnswerMapper">
+	<resultMap type="com.pojo.ProtypeAnswer" id="protypeAnswer">
+		<id property="id" column="id"/>
+		<result property="protypeId" column="PROTYPE_ID"/>
+		<result property="firstAnswer" column="FIRST_ANSWER"/>
+		<result property="secondAnswer" column="SECOND_ANSWER"/>
+		<result property="thirdAnswer" column="THIRD_ANSWER"/>
+		<result property="fourthAnswer" column="FOURTH_ANSWER"/>
+		<result property="trueAnswer" column="TRUE_ANSWER"/>
+		<result property="addTime" column="ADD_TIME"/>
+	</resultMap>
+	
+	<insert id="addProtypeAnswer" parameterType="com.pojo.ProtypeAnswer">
+		insert into zm_protype_answer (ID,PROTYPE_ID,FIRST_ANSWER,SECOND_ANSWER,THIRD_ANSWER,FOURTH_ANSWER,TRUE_ANSWER,ADD_TIME)
+		values (#{id},#{protypeId},#{firstAnswer},#{secondAnswer},#{thirdAnswer},#{fourthAnswer},#{trueAnswer},#{addTime})
+	</insert>
+	
+	<select id="queryProtypeAnswer" resultType="java.util.Map">
+		select t1.ID,t1.PROTYPE_ID,t1.FIRST_ANSWER,t1.SECOND_ANSWER,t1.THIRD_ANSWER,t1.FOURTH_ANSWER,
+		t1.TRUE_ANSWER,t1.ADD_TIME,cast(t2.PROTYPE as char) as protype,t2.title from zm_protype_answer t1 
+		left join zm_english_protype t2
+		on t1.protype_id = t2.id where t2.id=#{protypeId}
+	</select>
+	
+	<select id="queryProtypeAnswerById" parameterType="String" resultMap="protypeAnswer">
+		select * from zm_protype_answer where id = #{id}
+	</select>
+	
+	<update id="updateProtypeAnswer" parameterType="com.pojo.ProtypeAnswer">
+		update zm_protype_answer set FIRST_ANSWER=#{firstAnswer},SECOND_ANSWER=#{secondAnswer},
+		THIRD_ANSWER=#{thirdAnswer},FOURTH_ANSWER=#{fourthAnswer},TRUE_ANSWER=#{trueAnswer}
+		where id=#{id}
+	</update>
+	
+	<delete id="deleteProtypeAnswerById" parameterType="String">
+		delete from zm_protype_answer where id = #{id}
+	</delete>
+	<delete id="deleteProtypeId" parameterType="String">
+		delete from zm_protype_answer where PROTYPE_ID=#{protypeId}
+	</delete>
+	
+</mapper>

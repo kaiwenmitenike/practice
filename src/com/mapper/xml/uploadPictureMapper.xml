@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.UploadPictureMapper">
+	<resultMap type="com.pojo.UploadPicture" id="uploadPicture">
+		<id property="id" column="id"/>
+		<result property="upload_path" column="upload_path"/>
+		<result property="upload_id" column="upload_id"/>
+	</resultMap>
+	
+	<insert id="addPicture" parameterType="com.pojo.UploadPicture">
+		insert into upload_picture (id,upload_path,upload_id) values (#{id},#{upload_path},#{upload_id})
+	</insert>
+	
+	<select id="queryById" parameterType="String" resultType="com.pojo.UploadPicture">
+		select * from upload_picture where upload_id=#{id}
+	</select>
+	
+	<update id="updatePicture" parameterType="com.pojo.UploadPicture">
+		update upload_picture set id=#{id},upload_path=#{upload_path},upload_id=#{upload_id} where id=#{id}
+	</update>
+</mapper>

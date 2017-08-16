@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.EnglishProtypeMapper">
+	<resultMap type="com.pojo.EnglishProtype" id="englishProtype">
+		<id property="id" column="id"/>
+		<result property="title" column="TITLE"/>
+		<result property="protype" column="PROTYPE"/>
+		<result property="addTime" column="ADD_TIME"/>
+		<result property="status" column="STATUS"/>
+	</resultMap>
+	
+	<insert id="addProtype" parameterType="com.pojo.EnglishProtype">
+		insert into zm_english_protype (id,PROTYPE,ADD_TIME,TITLE,STATUS)
+		values (#{id},#{protype},#{addTime},#{title},#{status})
+	</insert>
+	<select id="queryProtype" resultType="java.util.Map">
+		select t1.id,cast(t1.protype as char) as protype,
+		t1.title,t1.add_time from zm_english_protype t1 where status=#{status} limit #{startPage},#{count}
+	</select>
+	
+	<select id="queryProtypeCount" parameterType="int" resultType="int">
+		select count(1) from zm_english_protype where status=#{status}
+	</select>
+	
+	<delete id="deleteById" parameterType="String">
+		delete from zm_english_protype where id=#{id}
+	</delete>
+	
+</mapper>

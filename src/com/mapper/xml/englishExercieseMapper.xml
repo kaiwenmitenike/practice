@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.EnglishExercisesMapper">
+	<resultMap type="com.pojo.EnglishExercises" id="englishExercises">
+		<id property="id" column="id"/>
+		<result property="exercises" column="EXERCISES"/>
+		<result property="firstAnswer" column="FIRST_ANSWER"/>
+		<result property="secondAnswer" column="SECOND_ANSWER"/>
+		<result property="thirdAnswer" column="THIRD_ANSWER"/>
+		<result property="fourthAnswer" column="FOURTH_ANSWER"/>
+		<result property="trueAnswer" column="TRUE_ANSWER"/>
+		<result property="addTime" column="ADD_TIME"/>
+	</resultMap>
+	<insert id="addEnglishExercises" parameterType="com.pojo.EnglishExercises">
+		insert into ZM_ENGLISH_EXERCISES 
+		(id,EXERCISES,FIRST_ANSWER,SECOND_ANSWER,THIRD_ANSWER,FOURTH_ANSWER,TRUE_ANSWER,ADD_TIME) 
+		values (#{id},#{exercises},#{firstAnswer},#{secondAnswer},#{thirdAnswer},#{fourthAnswer},#{trueAnswer},#{addTime})
+	</insert>
+	
+	<select id="queryEnglishExercisesCount" resultType="int">
+		select count(1) from ZM_ENGLISH_EXERCISES
+	</select>
+	
+	<select id="queryEnglishExerciese" resultType="java.util.Map">
+		select id,cast(EXERCISES as char) exercises,FIRST_ANSWER,SECOND_ANSWER,THIRD_ANSWER,FOURTH_ANSWER,TRUE_ANSWER,ADD_TIME
+		 from ZM_ENGLISH_EXERCISES limit #{startPage},#{count}
+	</select>
+	
+	<delete id="deleteEnglishExderciese" parameterType="String">
+		delete from ZM_ENGLISH_EXERCISES where id=#{id}
+	</delete>
+	
+	<select id="queryEnglishExdercieseById" parameterType="String" resultType="com.pojo.EnglishExercises">
+		select id,cast(EXERCISES as char) exercises,FIRST_ANSWER as firstAnswer,SECOND_ANSWER as secondAnswer,
+		THIRD_ANSWER as thirdAnswer,FOURTH_ANSWER as fourthAnswer,TRUE_ANSWER as trueAnswer,ADD_TIME as addTime
+		from ZM_ENGLISH_EXERCISES where id=#{id}
+	</select>
+	
+	<update id="updateEnglishExercises" parameterType="com.pojo.EnglishExercises">
+		update zm_english_exercises set EXERCISES=#{exercises},FIRST_ANSWER=#{firstAnswer},
+		SECOND_ANSWER=#{secondAnswer},THIRD_ANSWER=#{thirdAnswer}
+		,FOURTH_ANSWER=#{fourthAnswer},TRUE_ANSWER=#{trueAnswer} where ID=#{id}
+	</update>
+</mapper>
